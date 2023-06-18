@@ -35,7 +35,10 @@ class QWindowApp(QMainWindow):
 
     def renderLaTeX(self, qWidget, latex):
         fig = Figure()
+        fig.suptitle(latex, x=0.0, y=0.5, horizontalalignment='left', verticalalignment='center', fontsize=12)
+
         canvas = FigureCanvasQTAgg(fig)
+        canvas.draw()
 
         layout = qWidget.layout()
         if not layout:
@@ -44,13 +47,6 @@ class QWindowApp(QMainWindow):
         if layout.count():
             layout.removeWidget(layout.itemAt(0).widget())
         layout.addWidget(canvas)
-
-        # Clear figure
-        fig.clear()
-        # Set figure title
-        fig.suptitle(latex, x=0.0, y=0.5, horizontalalignment='left', verticalalignment='center', fontsize=12)
-        canvas.draw()
-        return
 
     def fill_TeX_labels(self):
         self.domain.make_latex(self.domain.variants[self.usr_var-1])
