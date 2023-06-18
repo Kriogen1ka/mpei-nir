@@ -40,8 +40,15 @@ class QWindowApp(QMainWindow):
         fig = Figure(edgecolor=cl, facecolor=cl)
         # Add FigureCanvasQTAgg widget to form
         canvas = FigureCanvasQTAgg(fig) 
-        qWidget.setLayout(QVBoxLayout(self))
-        qWidget.layout().addWidget(canvas)
+
+        layout = qWidget.layout()
+        if not layout:
+            layout = QVBoxLayout(qWidget)
+
+        if layout.count():
+            layout.removeWidget(layout.itemAt(0).widget())
+        layout.addWidget(canvas)
+
         # Clear figure
         fig.clear()
         # Set figure title
