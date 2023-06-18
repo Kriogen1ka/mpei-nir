@@ -34,12 +34,8 @@ class QWindowApp(QMainWindow):
         #self.LaTeX_rendered = False
 
     def renderLaTeX(self, qWidget, latex):
-        bg = self.palette().window().color() #change to widget color!
-        cl = (bg.redF(), bg.greenF(), bg.blueF())
-        # Create figure, using window bg color
-        fig = Figure(edgecolor=cl, facecolor=cl)
-        # Add FigureCanvasQTAgg widget to form
-        canvas = FigureCanvasQTAgg(fig) 
+        fig = Figure()
+        canvas = FigureCanvasQTAgg(fig)
 
         layout = qWidget.layout()
         if not layout:
