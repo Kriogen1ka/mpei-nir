@@ -66,19 +66,19 @@ class QWindowApp(QMainWindow):
         self.renderLaTeX(self.widget_10, self.domain.latex_4_p2)
         self.renderLaTeX(self.widget_9, self.domain.latex_5_p2)
         #"""
-        return  
+        return
 
     def run(self):
         self.show()
         self.app.exec()
 
-    def set_init_visibility(self): 
+    def set_init_visibility(self):
         self.label_11.setVisible(False)
         self.label_12.setVisible(False)
         self.label_14.setVisible(False)
         self.label_15.setVisible(False)
         return
-    
+
     def set_pick_visibility(self):
         self.label_11.setVisible(True)
         self.label_12.setVisible(True)
@@ -100,7 +100,7 @@ class QWindowApp(QMainWindow):
         self.fill_TeX_labels()
         self.fill_prompt_labels()
         return
-    
+
     def input_eq_1(self):
         input_data = self.plainTextEdit.toPlainText()
         # CHECK INPUT !!!
@@ -115,7 +115,7 @@ class QWindowApp(QMainWindow):
             self.error.setText("Значения введены неверно")
             self.error.exec()
         return
-    
+
     def input_eq_2(self):
         input_data = self.plainTextEdit_2.toPlainText()
         # CHECK INPUT !!!
