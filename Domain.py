@@ -169,12 +169,12 @@ class Domain():
         self.latex_2_p1 = r'$\int_{t_0}^{t_1} (' + self.var_latex[5] + r'x_1+' + self.var_latex[6] + r'x_2+' + self.var_latex[7] + r'x_3) dt=0$'
         self.latex_3_p1 = r'$\int_{t_0}^{t_1} (' + self.var_latex[8] + r'x_1+' + self.var_latex[9] + r'x_2+' + self.var_latex[10] + r'x_3) dt=0$'
         self.latex_4_p1 = r'$\int_{t_0}^{t_1} (' + self.var_latex[11] + r'x_1^2+' + self.var_latex[12] + r'x_2^2+' + self.var_latex[13] + r'x_3^2+' + self.var_latex[14] + r'u_1^2+' + self.var_latex[15] + r'u_2^2) dt\rightarrow min$'
-        self.latex_5_p1 = r'$x(t_0) и x(t_1) заданы$'
+        self.latex_5_p1 = r'$x(t_0) \: и \: x(t_1) \: заданы$'
         self.latex_1_p2 = r'$\frac{d^3 x}{dt^3}+' + self.var_latex[16] + r'\frac{d^2 x}{dt^2}+' + self.var_latex[17] + r'\frac{dx}{dt}+' + self.var_latex[18] + r'x=' + self.var_latex[19] + r'u_1+' + self.var_latex[20] + r'u_2$'
         self.latex_2_p2 = r'$\int_{t_0}^{t_1} (' + self.var_latex[21] + r'x_1+' + self.var_latex[22] + r'x_2+' + self.var_latex[23] + r'x_3) dt +' + self.var_latex[24] + r't_1+' + self.var_latex[25] + r'+' + self.var_latex[26] + r'x_1(t_1)+' + self.var_latex[27] + r'x_2(t_1)+' + self.var_latex[28] + r'x_3(t_1)=0$'
         self.latex_3_p2 = r'$\int_{t_0}^{t_1} (' + self.var_latex[29] + r'x_1+' + self.var_latex[30] + r'x_2+' + self.var_latex[31] + r'x_3) dt +' + self.var_latex[32] + r't_1+' + self.var_latex[33] + r'+' + self.var_latex[34] + r'x_1(t_1)+' + self.var_latex[35] + r'x_2(t_1)+' + self.var_latex[36] + r'x_3(t_1)=0$'
         self.latex_4_p2 = r'$\int_{t_0}^{t_1} (' + self.var_latex[37] + r'x_1^2+' + self.var_latex[38] + r'x_2^2+' + self.var_latex[39] + r'x_3^2+' + self.var_latex[40] + r'u_1^2+' + self.var_latex[41] + r'u_2^2) dt+' + self.var_latex[42] + r't_1+' + self.var_latex[43] + r'+' + self.var_latex[44] + r'x_1(t_1)+' + self.var_latex[45] + r'x_2(t_1)+' + self.var_latex[46] + r'x_3(t_1)\rightarrow min$'
-        self.latex_5_p2 = r'$Значение x(t_1) не задано$'
+        self.latex_5_p2 = r'$Значение \: x(t_1) \: не \: задано$'
         return
     
     def make_latex2(self, variant_i):
@@ -237,7 +237,14 @@ class Domain():
     
     def setVariant(self, var_i):
         self.usr_var = var_i
-        self.usr_var_picked = True
+        if self.usr_var_picked == True:
+            self.current_step_p1 = 0
+            self.current_step_p2 = 0
+        else:
+            self.usr_var_picked = True
+        new_str = "Выбран вариант " + str(var_i) + "\r\n"
+        self.history[0] += new_str
+        self.history[1] += new_str
         self.equation_template()
         self.equation_variant(self.variants[int(self.usr_var)-1])
         return
