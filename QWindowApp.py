@@ -13,6 +13,9 @@ class QWindowApp(QMainWindow):
         self.pushButton_OK.clicked.connect(self.pick_var)
         self.pushButton_Input1.clicked.connect(self.input_eq_1)
         self.pushButton_Input2.clicked.connect(self.input_eq_2)
+        #self.menuExit.clicked.connect(self.exit)
+        self.actionQuit.triggered.connect(self.exit)
+        self.actionAbout.triggered.connect(self.credits)
         self.set_init_visibility()
         method_str = """Правила, которых необходимо придерживаться при работе с программой:
          • В окно ввода следует записывать только правые части выражений
@@ -32,6 +35,7 @@ class QWindowApp(QMainWindow):
         """
         self.label_24.setText(method_str)
         #self.LaTeX_rendered = False
+        self.tabWidget.setCurrentWidget(self.tab_var)
 
     def renderLaTeX(self, qWidget, latex):
         fig = Figure()
@@ -95,6 +99,9 @@ class QWindowApp(QMainWindow):
         self.set_pick_visibility()
         self.fill_TeX_labels()
         self.fill_prompt_labels()
+        self.tabWidget.setCurrentWidget(self.tab_p1)
+        self.plainTextEdit_3.setPlainText(self.domain.history[0])
+        self.plainTextEdit_4.setPlainText(self.domain.history[1])
         return
 
     def input_eq_1(self):
@@ -127,10 +134,14 @@ class QWindowApp(QMainWindow):
             self.error.exec()
         return
 
-    def exit():
+    def exit(self):
         # обработчик выхода
+        ret = QMessageBox.question(self, "Закрыть программу?", "Данные будут утеряны")
+        if ret == QMessageBox.StandardButton.Yes:
+            self.app.quit()
         return
 
-    def credits():
+    def credits(self):
         # информация о разработчике
+        ret = QMessageBox.information(self, "О разработчике", "Разработчик")
         return
