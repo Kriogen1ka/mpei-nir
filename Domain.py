@@ -70,13 +70,13 @@ class Domain():
         self.step_12_2 = [12, 'P3(T1)=', 'Введите условие трансверсальности по x3 для свободного конца траектории:', 'Условие трансверсальности по X3:']
         self.step_13_2 = [13, '0=', 'Введите условие стационарности по T1:', 'Условие стационарности по T1:']
         self.step_14_2 = [14, 'U1opt=', 'Введите U1-оптимальное:', 'U1-оптимальное:']
-        self.step_14_2 = [14, 'U2opt=', 'Введите U2-оптимальное:', 'U2-оптимальное:']
-        self.step_15_2 = [15, 'X1\'=', 'Уравнения для определения оптимальной траектории. Введите правую часть первого уравнения:', 'Первое уравнение для определения оптимальной траектории:']
-        self.step_16_2 = [16, 'X2\'=', 'Уравнения для определения оптимальной траектории. Введите правую часть второго уравнения:', 'Второе уравнение для определения оптимальной траектории:']
-        self.step_17_2 = [17, 'X3\'=', 'Уравнения для определения оптимальной траектории. Введите правую часть третьего уравнения:', 'Третье уравнение для определения оптимальной траектории:']
+        self.step_15_2 = [15, 'U2opt=', 'Введите U2-оптимальное:', 'U2-оптимальное:']
+        self.step_16_2 = [16, 'X1\'=', 'Уравнения для определения оптимальной траектории. Введите правую часть первого уравнения:', 'Первое уравнение для определения оптимальной траектории:']
+        self.step_17_2 = [17, 'X2\'=', 'Уравнения для определения оптимальной траектории. Введите правую часть второго уравнения:', 'Второе уравнение для определения оптимальной траектории:']
+        self.step_18_2 = [18, 'X3\'=', 'Уравнения для определения оптимальной траектории. Введите правую часть третьего уравнения:', 'Третье уравнение для определения оптимальной траектории:']
         self.steps_p2 = [self.step_0_2, self.step_1_2, self.step_2_2, self.step_3_2, self.step_4_2, self.step_5_2, self.step_6_2,
                          self.step_7_2, self.step_8_2, self.step_9_2, self.step_10_2, self.step_11_2, self.step_12_2, self.step_13_2,
-                         self.step_14_2, self.step_15_2, self.step_16_2, self.step_17_2]
+                         self.step_14_2, self.step_15_2, self.step_16_2, self.step_17_2, self.step_18_2]
         self.steps = [self.steps_p1, self.steps_p2]
         self.current_step_p1 = 0
         self.current_step_p2 = 0
@@ -85,6 +85,8 @@ class Domain():
         self.history = [self.history_p1, self.history_p2]
         self.usr_var = 0
         self.usr_var_picked = False
+        self.completed_p1 = False
+        self.completed_p2 = False
 
     def equation_template(self):
         #data from variants
@@ -211,20 +213,24 @@ class Domain():
         # if (check_input_data(input_data)): # проверяем ввод на адекватность
         # else: обработка ошибки
         # ADD CHECKS !!!
-        sym_input_data = sym.sympify(input_data)
-        # sympify uses eval. Don’t use it on unsanitized input !!!
-        if ((sym_input_data == target_equation)
-        or (sym.simplify(sym_input_data) == sym.simplify(target_equation))
-        or (sym.expand(sym_input_data) == sym.expand(target_equation))
-        ):
-            res = True
-        else:
+        try:
+            stripped_input_data = input_data.replace("(T1)", "")
+            sym_input_data = sym.sympify(stripped_input_data)
+            # sympify uses eval. Don’t use it on unsanitized input !!!
+            if ((sym_input_data == target_equation)
+            or (sym.simplify(sym_input_data) == sym.simplify(target_equation))
+            or (sym.expand(sym_input_data) == sym.expand(target_equation))
+            ):
+                res = True
+            else:
+                res = False
+        except Exception:
             res = False
         return res
 
     def check_step(self, input_data, cur_step, cur_part):
         #self.prompt1 = self.steps[cur_part-1][cur_step][1] 
-        #elf.prompt2 = self.steps[cur_part-1][cur_step][2]
+        #self.prompt2 = self.steps[cur_part-1][cur_step][2]
         self.prompt3 = self.steps[cur_part-1][cur_step][3]
         target_equation = self.eqs_var[cur_part-1][cur_step]
         if (self.check_equations(input_data, target_equation)):
@@ -240,6 +246,8 @@ class Domain():
         if self.usr_var_picked == True:
             self.current_step_p1 = 0
             self.current_step_p2 = 0
+            self.completed_p1 = False
+            self.completed_p2 = False
         else:
             self.usr_var_picked = True
         new_str = "Выбран вариант " + str(var_i) + "\r\n"
@@ -251,16 +259,26 @@ class Domain():
 
     def next_input_p1(self, input_data):
         if (self.check_step(input_data, self.current_step_p1, 1)):
-            self.current_step_p1 += 1
-            res = True
+            if (self.current_step_p1 < (len(self.steps_p1) - 1)):
+                self.current_step_p1 += 1
+                res = True
+            else:
+                self.current_step_p1 = 0
+                res = True
+                self.completed_p1 = True
         else:
             res = False
         return res
 
     def next_input_p2(self, input_data):
         if (self.check_step(input_data, self.current_step_p2, 2)):
-            self.current_step_p2 += 1
-            res = True
+            if (self.current_step_p2 < (len(self.steps_p2) - 1)):
+                self.current_step_p2 += 1
+                res = True
+            else:
+                self.current_step_p2 = 0
+                res = True
+                self.completed_p2 = True
         else:
             res = False
         return res
