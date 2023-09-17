@@ -27,7 +27,7 @@ class QWindowApp(QMainWindow):
                 X3 - переменная состояния 3';
          • Написание строчными буквами недопустимо!
          • Операция умножения должна быть записана с помощью символа «*»
-         • Операция возведения в степень обозначается как «**»
+         • Операция возведения в степень обозначается как «**» или «^»
          • Операция дифференцирования записывается следующим образом: dХ, где Х - дифференцируемое выражение (d – строчная буква)
          • Множители Лагранжа следует вводить как LAi, i=0,1,2
          • В условии стационарности по t1 слагаемые, содержащие произведения множителей Лагранжа на интегранты в момент времени t1,
@@ -112,6 +112,11 @@ class QWindowApp(QMainWindow):
             self.label_11.setText(self.domain.steps_p1[self.domain.current_step_p1][2])
             self.label_12.setText(self.domain.steps_p1[self.domain.current_step_p1][1])
             self.plainTextEdit.clear()
+            if (self.domain.completed_p1):
+                self.information = QMessageBox()
+                self.information.setWindowTitle("Поздравляю!")
+                self.information.setText("Первая часть лабораторной работы выполнена успешно, скопируйте историю в отчёт")
+                self.information.exec()
         else:
             self.error = QMessageBox()
             self.error.setWindowTitle("Ошибка")
@@ -127,6 +132,11 @@ class QWindowApp(QMainWindow):
             self.label_14.setText(self.domain.steps_p2[self.domain.current_step_p2][2])
             self.label_15.setText(self.domain.steps_p2[self.domain.current_step_p2][1])
             self.plainTextEdit_2.clear()
+            if (self.domain.completed_p2):
+                self.information = QMessageBox()
+                self.information.setWindowTitle("Поздравляю!")
+                self.information.setText("Вторая часть лабораторной работы выполнена успешно, скопируйте историю в отчёт")
+                self.information.exec()
         else:
             self.error = QMessageBox()
             self.error.setWindowTitle("Ошибка")
