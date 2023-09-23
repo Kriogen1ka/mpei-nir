@@ -262,7 +262,7 @@ class Domain():
         self.equation_template()
         self.equation_variant(self.variants[int(self.usr_var)-1])
         # ОТЛАДОЧНЫЙ ВЫВОД
-        print(self.variant_generated)
+        #print(self.variant_generated)
         return
 
     def setVariant(self, var_i):
