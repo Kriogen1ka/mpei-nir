@@ -1,4 +1,5 @@
 import sympy as sym
+import random
 
 class Domain():
     def __init__(self):
@@ -31,9 +32,10 @@ class Domain():
         self.variant_23 = [4, 1, 4, 1, 4, 2, 3, 3, 3, 2, 2, 4, 1, 4, 1, 3, 1, 1, 1, 4, 1, 3, 3, 4, 1, 2, 2, 1, 4, 3, 3, 3, 4, 2, 1, 4, 3, 1, 1, 4, 2, 1, 2, 3, 4, 1, 1]
         self.variant_24 = [1, 1, 4, 2, 1, 4, 4, 3, 1, 2, 4, 2, 4, 2, 4, 2, 3, 3, 3, 1, 4, 2, 4, 1, 4, 4, 4, 2, 1, 1, 1, 1, 2, 3, 2, 1, 4, 2, 3, 3, 3, 4, 1, 1, 2, 3, 4]
         self.variant_25 = [2, 2, 4, 1, 4, 3, 1, 3, 3, 2, 2, 1, 4, 4, 4, 2, 3, 4, 3, 3, 4, 2, 4, 2, 1, 1, 4, 3, 3, 4, 1, 4, 1, 2, 2, 3, 4, 3, 2, 2, 4, 4, 1, 3, 1, 2, 2]
+        self.variant_generated = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         self.variants = [self.variant_1, self.variant_2, self.variant_3, self.variant_4, self.variant_5, self.variant_6, self.variant_7, self.variant_8, self.variant_9,
                          self.variant_10, self.variant_11, self.variant_12, self.variant_13, self.variant_14, self.variant_15, self.variant_16, self.variant_17,
-                         self.variant_18, self.variant_19, self.variant_20, self.variant_21, self.variant_22, self.variant_23, self.variant_24, self.variant_25]
+                         self.variant_18, self.variant_19, self.variant_20, self.variant_21, self.variant_22, self.variant_23, self.variant_24, self.variant_25, self.variant_generated]
         
         # steps
         # ПРОВЕРИТЬ ИКСЫ НА ПРОИЗВОДНЫЕ
@@ -176,7 +178,7 @@ class Domain():
         self.latex_2_p2 = r'$\int_{t_0}^{t_1} (' + self.var_latex[21] + r'x_1+' + self.var_latex[22] + r'x_2+' + self.var_latex[23] + r'x_3) dt +' + self.var_latex[24] + r't_1+' + self.var_latex[25] + r'+' + self.var_latex[26] + r'x_1(t_1)+' + self.var_latex[27] + r'x_2(t_1)+' + self.var_latex[28] + r'x_3(t_1)=0$'
         self.latex_3_p2 = r'$\int_{t_0}^{t_1} (' + self.var_latex[29] + r'x_1+' + self.var_latex[30] + r'x_2+' + self.var_latex[31] + r'x_3) dt +' + self.var_latex[32] + r't_1+' + self.var_latex[33] + r'+' + self.var_latex[34] + r'x_1(t_1)+' + self.var_latex[35] + r'x_2(t_1)+' + self.var_latex[36] + r'x_3(t_1)=0$'
         self.latex_4_p2 = r'$\int_{t_0}^{t_1} (' + self.var_latex[37] + r'x_1^2+' + self.var_latex[38] + r'x_2^2+' + self.var_latex[39] + r'x_3^2+' + self.var_latex[40] + r'u_1^2+' + self.var_latex[41] + r'u_2^2) dt+' + self.var_latex[42] + r't_1+' + self.var_latex[43] + r'+' + self.var_latex[44] + r'x_1(t_1)+' + self.var_latex[45] + r'x_2(t_1)+' + self.var_latex[46] + r'x_3(t_1)\rightarrow min$'
-        self.latex_5_p2 = r'$Значения \: x(t_1) \: и \: t_1 не \: заданы$'
+        self.latex_5_p2 = r'$Значения \: x(t_1) \: и \: t_1 \: не \: заданы$'
         return
     
     def make_latex2(self, variant_i):
@@ -241,6 +243,28 @@ class Domain():
             res = False
         return res
     
+    def generateVariant(self):
+        self.usr_var = 26 # SAME HERE CHANGE IT LATER
+        random.seed()
+        for i in range(len(self.variant_generated)):
+            rnd_int = random.randint(1, 5)
+            self.variant_generated[i] = rnd_int
+        if self.usr_var_picked == True:
+            self.current_step_p1 = 0
+            self.current_step_p2 = 0
+            self.completed_p1 = False
+            self.completed_p2 = False
+        else:
+            self.usr_var_picked = True
+        new_str = "Выбран сгенерированный вариант \r\n"
+        self.history[0] += new_str
+        self.history[1] += new_str
+        self.equation_template()
+        self.equation_variant(self.variants[int(self.usr_var)-1])
+        # ОТЛАДОЧНЫЙ ВЫВОД
+        print(self.variant_generated)
+        return
+
     def setVariant(self, var_i):
         self.usr_var = var_i
         if self.usr_var_picked == True:
