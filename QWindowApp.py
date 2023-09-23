@@ -11,6 +11,7 @@ class QWindowApp(QMainWindow):
         loadUi("Lab1_optimal.ui", self)
         self.domain = domain
         self.pushButton_OK.clicked.connect(self.pick_var)
+        self.pushButton_generate.clicked.connect(self.generate_var)
         self.pushButton_Input1.clicked.connect(self.input_eq_1)
         self.pushButton_Input2.clicked.connect(self.input_eq_2)
         #self.menuExit.clicked.connect(self.exit)
@@ -96,6 +97,17 @@ class QWindowApp(QMainWindow):
     def pick_var(self):
         self.usr_var = int(self.spinBox.text())
         self.domain.setVariant(self.usr_var)
+        self.set_pick_visibility()
+        self.fill_TeX_labels()
+        self.fill_prompt_labels()
+        self.tabWidget.setCurrentWidget(self.tab_p1)
+        self.plainTextEdit_3.setPlainText(self.domain.history[0])
+        self.plainTextEdit_4.setPlainText(self.domain.history[1])
+        return
+    
+    def generate_var(self):
+        self.usr_var = 26 # CHANGE THAT LATER SOMEHOW
+        self.domain.generateVariant()
         self.set_pick_visibility()
         self.fill_TeX_labels()
         self.fill_prompt_labels()
