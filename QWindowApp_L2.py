@@ -166,7 +166,7 @@ class QWindowApp(QMainWindow):
         return
 
     def credits(self):
-        QMessageBox.information(self, "О прогамме",
+        QMessageBox.information(self, "О программе",
 """Программный комплекс для проведения лабораторной работы по курсу «Оптимальное управление».
 
 Тема лабораторной работы: «Решение задач оптимального управления на основе принципа максимума».
