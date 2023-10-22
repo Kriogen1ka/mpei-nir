@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>ЛР Решение задач оптимального управления на основе принципа максимума</string>
+   <string>Лабораторная работа по оптимальному управлению. Принцип максимума</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QTabWidget" name="tabWidget">
